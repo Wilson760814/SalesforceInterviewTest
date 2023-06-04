@@ -1,0 +1,87 @@
+<template>
+    <lightning-card title="Datatable Inteview Test">
+        <div class="slds-grid slds-wrap  slds-gutters">
+            <!-- Search input box -->
+            <div class="slds-p-bottom_small slds-col slds-size_8-of-12">
+                <div class="slds-form-element__control lwcInputInner">
+                    <div onkeyup={SearchNamehandleKeyUp}>
+                        <lightning-input
+                            name="SearchBusinessName"
+                            type="search"
+                            placeholder="Search"
+                            variant="label-hidden"
+                            class = "bordercolor"
+                            ></lightning-input>
+                    </div>
+                </div>
+             </div>
+            <!-- New Button -->
+            <div class="slds-p-bottom_small slds-col slds-size_4-of-12">
+               <button class="slds-button slds-button_outline-brand" style="width:100%; background: whitesmoke;" id = "newButton"  onclick={customShowModalPopup}>new</button>
+            </div>
+        </div>
+        <!-- datatable display -->
+        <div class="slds-scrollable_y" style="height:20rem; width:100%">
+            <lightning-datatable
+                key-field="Id"
+                data={tableData}
+                columns={columns}
+                default-sort-direction={defaultSortDirection}
+                sorted-direction={sortDirection}
+                sorted-by={sortedBy}
+                onsort={onHandleSort}
+                onrowselection={getSelectedName}
+            ></lightning-datatable>
+        </div>
+       <!-- Populate buttons -->
+        <div class="slds-grid slds-wrap">
+            <!-- Convert button -->
+            <div class="slds-p-bottom_small slds-col slds-size_8-of-12">
+                <button class="slds-button slds-button_outline-brand" style="width:100%; background: whitesmoke;" id = "convertButton" disabled = {convertDisabled} onclick={convertRecords}>{convertLable}</button>
+            </div>
+            <!-- Clone button -->
+            <div class="slds-p-bottom_small slds-col slds-size_2-of-12">
+                <button class="slds-button slds-button_outline-brand" style="width:100%; background: whitesmoke;" id = "cloneButton" disabled = {cloneDisabled} onclick={cloneRecords}>Clone</button>
+            </div>
+            <!-- Delete button -->
+            <div class="slds-p-bottom_small slds-col slds-size_2-of-12">
+                <button class="slds-button slds-button_outline-brand" style="width:100%; background: whitesmoke;" id = "deleteButton"  disabled = {deleteDisabled} onclick={deleteRecords}>Delete</button>
+            </div>
+        </div>
+        <!-- Modal Popup -->
+        <template if:true={customModal}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- modal header start -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Continue" onclick={customHideModalPopup}>
+                            <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium slds-hyphenate slds-text-align_left">New Record</h2>
+                    </header>
+                    <!-- modal body start -->
+                    <div class="slds-modal__content slds-p-around_medium">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <lightning-radio-group name="radioGroup"
+                            label="Create a new"
+                            options={options}
+                            value={value}
+                            type="radio"
+                            onchange={handleRadioChange}></lightning-radio-group>
+                        <br/>
+                        <div class="slds-text-align_right">
+                            <p><a href='#' onclick={navigationLink}>Continue ></a></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>
+
+
